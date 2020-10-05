@@ -125,6 +125,16 @@ Connection::PollData Connection::getEventLoopPollData() const
     return {pollData.fd, pollData.events, pollData.timeout_usec};
 }
 
+int Connection::attachSdevent(sd_event *event, int priority)
+{
+    return iface_->sd_bus_attach_event(bus_.get(), event, priority);
+}
+
+int Connection::detachSdevent()
+{
+    return iface_->sd_bus_detach_event(bus_.get());
+}
+
 const ISdBus& Connection::getSdBusInterface() const
 {
     return *iface_.get();

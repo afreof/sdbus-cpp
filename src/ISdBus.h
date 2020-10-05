@@ -29,6 +29,7 @@
 #define SDBUS_CXX_ISDBUS_H
 
 #include <systemd/sd-bus.h>
+#include <systemd/sd-event.h>
 
 namespace sdbus::internal {
 
@@ -79,6 +80,9 @@ namespace sdbus::internal {
 
         virtual int sd_bus_process(sd_bus *bus, sd_bus_message **r) = 0;
         virtual int sd_bus_get_poll_data(sd_bus *bus, PollData* data) = 0;
+
+        virtual int sd_bus_attach_event(sd_bus *bus, sd_event *event, int priority) = 0;
+        virtual int sd_bus_detach_event(sd_bus *bus) = 0;
 
         virtual int sd_bus_flush(sd_bus *bus) = 0;
         virtual sd_bus *sd_bus_flush_close_unref(sd_bus *bus) = 0;

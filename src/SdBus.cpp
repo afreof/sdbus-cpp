@@ -250,6 +250,16 @@ int SdBus::sd_bus_get_poll_data(sd_bus *bus, PollData* data)
     return r;
 }
 
+int SdBus::sd_bus_attach_event(sd_bus *bus, sd_event *event, int priority)
+{
+    return ::sd_bus_attach_event(bus, event, priority);
+}
+
+int SdBus::sd_bus_detach_event(sd_bus *bus)
+{
+    return ::sd_bus_detach_event(bus);
+}
+
 int SdBus::sd_bus_flush(sd_bus *bus)
 {
     return ::sd_bus_flush(bus);

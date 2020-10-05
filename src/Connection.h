@@ -66,6 +66,9 @@ namespace sdbus::internal {
         PollData getEventLoopPollData() const override;
         bool processPendingRequest() override;
 
+        int attachSdevent(sd_event *event, int priority) override;
+        int detachSdevent() override;
+
         void addObjectManager(const std::string& objectPath) override;
         SlotPtr addObjectManager(const std::string& objectPath, void* /*dummy*/) override;
 

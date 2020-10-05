@@ -27,6 +27,8 @@
 #ifndef SDBUS_CXX_ICONNECTION_H_
 #define SDBUS_CXX_ICONNECTION_H_
 
+#include <systemd/sd-event.h>
+
 #include <string>
 #include <memory>
 #include <chrono>
@@ -158,6 +160,26 @@ namespace sdbus {
          * @throws sdbus::Error in case of failure
          */
         virtual bool processPendingRequest() = 0;
+
+        /*!
+         * @brief Attach a bus connection object to an event loop
+         *
+         * @returns 0 or a positive integer on success, a negative errno-style error code otherwise.
+         *
+         * Attaches the specified bus connection object to an sd-event(3) event loop.
+         * See sd-event's sd_bus_attach_event() for further details.
+         *
+         * @param[in] event a pointer to a sd-event loop.
+         * @param[in] priority for the event source object.
+         */
+        virtual int attachSdevent(sd_event *event, int priority=SD_EVENT_PRIORITY_NORMAL) = 0;
+
+        /*!
+         * @brief Detach a bus connection object to an event loop
+         *
+         * @returns 0 or a positive integer on success, a negative errno-style error code otherwise.
+         */
+        virtual int detachSdevent() = 0;
 
         /*!
          * @brief Sets general method call timeout
